@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "s2chunking"
+version = "0.1.0"
+description = "A library for structural-semantic chunking of documents."
+authors = [
+    { name = "Prashant Verma", email = "prashant27050@gmail.com" }
+]
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "pydantic>=1.10.0",
+    "networkx>=3.0",
+    "numpy>=1.23.0",
+    "scikit-learn>=1.1.0",
+    "torch>=2.0.0",
+    "transformers>=4.25.0",
+    "ultralytics>=8.0.0",
+    "huggingface-hub>=0.10.0",
+    "opencv-python>=4.6.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/vprashant/s2-chunking-lib"
+Documentation = "https://github.com/vpasrhant/s2-chunking-lib/docs"
+Repository = "https://github.com/vprashant/s2-chunking-lib"
+Issues = "https://github.com/vprashant/s2-chunking-lib/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+s2chunking = ["*.txt", "*.md", "*.json"]  # Include non-Python files if needed
+
+[tool.black]
+line-length = 88
+target-version = ['py37', 'py38', 'py39', 'py310']
+
+[tool.isort]
+profile = "black"

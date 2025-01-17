@@ -1,0 +1,9 @@
+pydantic>=1.10.0
+networkx>=3.0
+numpy>=1.23.0
+scikit-learn>=1.1.0
+torch>=2.0.0
+transformers>=4.25.0
+ultralytics>=8.0.0
+huggingface-hub>=0.10.0
+opencv-python>=4.6.0
