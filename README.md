@@ -25,10 +25,10 @@ Inspired by the research in [arXiv:2501.05485](https://arxiv.org/pdf/2501.05485)
 
 ## Installation
 
-You can install the library using `pip`. Ensure you have Python 3.7 or higher installed.
+You can install the library using `pip`. Ensure you have Python 3.9 or higher installed.
 
 ```bash
-pip install s2chunking
+pip install s2chunking # not available as of now will update it soon
 ```
 
 ---
