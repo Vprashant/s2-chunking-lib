@@ -6,6 +6,29 @@
 ![Transformers](https://img.shields.io/badge/Transformers-Hugging%20Face-yellow)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
+![Machine Learning](https://img.shields.io/badge/Machine%20Learning-Yes-brightgreen)
+![Deep Learning](https://img.shields.io/badge/Deep%20Learning-Yes-blueviolet)
+![NLP](https://img.shields.io/badge/NLP-Yes-ff69b4)
+![Computer Vision](https://img.shields.io/badge/Computer%20Vision-Yes-9cf)
+![Graph Theory](https://img.shields.io/badge/Graph%20Theory-Yes-orange)
+![Open Source](https://img.shields.io/badge/Open%20Source-Yes-success)
+![Document Processing](https://img.shields.io/badge/Document%20Processing-Yes-blue)
+![Multi-Page Support](https://img.shields.io/badge/Multi--Page%20Support-Yes-green)
+![Semantic Analysis](https://img.shields.io/badge/Semantic%20Analysis-Yes-yellow)
+![Layout Detection](https://img.shields.io/badge/Layout%20Detection-Yes-red)
+![Hugging Face](https://img.shields.io/badge/Hugging%20Face-Transformers-yellow)
+![PyTorch](https://img.shields.io/badge/PyTorch-Yes-ee4c2c)
+![Scikit-learn](https://img.shields.io/badge/Scikit--learn-Yes-orange)
+![NetworkX](https://img.shields.io/badge/NetworkX-Yes-blue)
+![OCR](https://img.shields.io/badge/OCR-Yes-lightgrey)
+![Multi-Modal](https://img.shields.io/badge/Multi--Modal-Yes-9cf)
+![Research](https://img.shields.io/badge/Research-Yes-blueviolet)
+![Pre-trained Models](https://img.shields.io/badge/Pre--trained%20Models-Yes-green)
+![API](https://img.shields.io/badge/API-Yes-blue)
+![CLI](https://img.shields.io/badge/CLI-Yes-brightgreen)
+
+
+
 **S2 Chunking Lib** is a Python library designed for **structural-semantic chunking** of documents. It leverages advanced techniques to break down documents into meaningful chunks based on both **spatial layout** and **semantic content**. This library is particularly useful for processing multi-page documents, such as research papers, reports, and books, where understanding the structure and semantics is crucial.
 
 Inspired by the research in [arXiv:2501.05485](https://arxiv.org/pdf/2501.05485), this library implements a hybrid approach that combines **layout detection** (e.g., bounding boxes, regions) and **semantic analysis** (e.g., text embeddings) to create coherent and contextually meaningful chunks.
