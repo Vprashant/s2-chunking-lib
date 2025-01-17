@@ -1,5 +1,10 @@
 
-# S2 Chunking Lib
+## S2 Chunking: A Hybrid Framework for Document Segmentation Through Integrated Spatial and Semantic Analysis
+![Python](https://img.shields.io/badge/Python-3.7%2B-blue)
+![arXiv Paper](https://img.shields.io/badge/arXiv-2501.05485-b31b1b)
+![YOLO](https://img.shields.io/badge/YOLO-v8-orange)
+![Transformers](https://img.shields.io/badge/Transformers-Hugging%20Face-yellow)
+![License](https://img.shields.io/badge/License-MIT-green)
 
 **S2 Chunking Lib** is a Python library designed for **structural-semantic chunking** of documents. It leverages advanced techniques to break down documents into meaningful chunks based on both **spatial layout** and **semantic content**. This library is particularly useful for processing multi-page documents, such as research papers, reports, and books, where understanding the structure and semantics is crucial.
 
