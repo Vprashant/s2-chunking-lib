@@ -1,8 +1,8 @@
 
 ## S2 Chunking: A Hybrid Framework for Document Segmentation Through Integrated Spatial and Semantic Analysis
-![Python](https://img.shields.io/badge/Python-3.7%2B-blue)
+![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
 ![arXiv Paper](https://img.shields.io/badge/arXiv-2501.05485-b31b1b)
-![YOLO](https://img.shields.io/badge/YOLO-v8-orange)
+![YOLO](https://img.shields.io/badge/YOLO-v10-orange)
 ![Transformers](https://img.shields.io/badge/Transformers-Hugging%20Face-yellow)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
