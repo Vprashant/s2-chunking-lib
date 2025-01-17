@@ -11,7 +11,7 @@ class LayoutDetector:
         self,
         image_path: str,
         model_name: str = "model_wt.pt",  # change to "model.pt" for the custom model
-        repo_id: str = "vprashant/layout_deter",  
+        repo_id: str = "vprashant/doclayout_detector",  
         weights_folder: str = "weight",  
         local_model_path: Optional[str] = None,
         device: str = "cuda" if torch.cuda.is_available() else "cpu"
