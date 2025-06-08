@@ -10,9 +10,9 @@ class LayoutDetector:
     def __init__(
         self,
         image_path: str,
-        model_name: str = "model_wt.pt",  # change to "model.pt" for the custom model
+        model_name: str = "best.pt",  # change to "model.pt" for the custom model
         repo_id: str = "vprashant/doclayout_detector",  
-        weights_folder: str = "weight",  
+        weights_folder: str = "weights",  
         local_model_path: Optional[str] = None,
         device: str = "cuda" if torch.cuda.is_available() else "cpu"
     ):
@@ -58,7 +58,7 @@ class LayoutDetector:
         """Detect layout elements in an image using YOLO."""
         try:
             # Load image
-            image = cv2.imread(self.imgae_path)
+            image = cv2.imread(self.image_path)
             if image is None:
                 raise ValueError(f"Unable to load image from {self.image_path}")
     
