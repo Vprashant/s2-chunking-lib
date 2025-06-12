@@ -135,12 +135,16 @@ class StructuralSemanticChunker(BaseModel):
         try:
             all_nodes = []
             all_edges = []
+            global_id_counter = 1
             for page_number, image_path in enumerate(image_paths, start=1):
                 self.layout_detector = LayoutDetector(image_path=image_path)
                 layout_info = self.layout_detector.detect_layout()
 
-                nodes = self._generate_nodes_from_layout(layout_info, page_number)
+                nodes = self._generate_nodes_from_layout(
+                    layout_info, page_number, start_global_id=global_id_counter
+                )
                 all_nodes.extend(nodes)
+                global_id_counter += len(nodes)
 
                 edges = self._generate_edges(nodes)
                 all_edges.extend(edges)
@@ -150,7 +154,9 @@ class StructuralSemanticChunker(BaseModel):
             print(f"Error in chunk_from_images: {e}")
             return {}
 
-    def _generate_nodes_from_layout(self, layout_info: List[Dict], page_number: int) -> List[Dict]:
+    def _generate_nodes_from_layout(
+        self, layout_info: List[Dict], page_number: int, *, start_global_id: int = 1
+    ) -> List[Dict]:
         """
         Generate nodes from layout detection results for a specific page.
         Args:
@@ -163,11 +169,11 @@ class StructuralSemanticChunker(BaseModel):
         nodes = []
         for i, item in enumerate(layout_info):
             nodes.append({
-                "global_id": len(nodes) + 1,
+                "global_id": start_global_id + i,
                 "page": page_number,
-                "local_id": i + 1, 
+                "local_id": i + 1,
                 "bbox": item["bbox"],
-                "text": item["label"] 
+                "text": item["label"],
             })
         return nodes
 

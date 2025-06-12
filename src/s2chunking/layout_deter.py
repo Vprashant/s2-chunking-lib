@@ -16,7 +16,8 @@ class LayoutDetector:
         local_model_path: Optional[str] = None,
         device: str = "cuda" if torch.cuda.is_available() else "cpu"
     ):
-        self.image = image_path
+        # Store the path to the image that will be processed
+        self.image_path = image_path
         self.device = device
         self.repo_id = repo_id
         self.weights_folder = weights_folder
@@ -58,7 +59,7 @@ class LayoutDetector:
         """Detect layout elements in an image using YOLO."""
         try:
             # Load image
-            image = cv2.imread(self.imgae_path)
+            image = cv2.imread(self.image_path)
             if image is None:
                 raise ValueError(f"Unable to load image from {self.image_path}")
     
