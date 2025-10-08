@@ -1,52 +1,98 @@
-# API Documentation for S2 Chunking Lib
+# S2 Chunking API Reference
 
-## Overview
-
-The S2 Chunking Lib is a Python library designed to facilitate the chunking of data into manageable pieces. This documentation provides an overview of the classes and methods available in the library.
-
-## Classes
-
-### Chunker
-
-The `Chunker` class is the main class responsible for chunking data.
-
-#### Methods
-
-- **`__init__()`**
-  - Initializes a new instance of the `Chunker` class.
-  
-- **`set_chunk_size(size: int)`**
-  - Sets the size of each chunk.
-  - **Parameters:**
-    - `size` (int): The desired size of each chunk.
-  
-- **`chunk_data(data)`**
-  - Takes input data and returns it in chunks.
-  - **Parameters:**
-    - `data` (iterable): The input data to be chunked.
-  - **Returns:**
-    - An iterable of chunks.
-
-## Usage Example
+## Quick Reference
 
 ```python
-from s2chunking.chunker import Chunker
-
-chunker = Chunker()
-chunker.set_chunk_size(5)
-data = range(20)
-chunks = chunker.chunk_data(data)
-
-for chunk in chunks:
-    print(chunk)
+from s2chunking import (
+    StructuralSemanticChunker,  # Main chunker
+    ChunkFormatter,              # Format output chunks
+    LayoutDetector,              # Layout detection
+    BBoxOrderer                  # Reading order
+)
 ```
 
-## Utility Functions
+## StructuralSemanticChunker
 
-### validate_data(data)
+Main class for S2 chunking.
 
-Checks the validity of the input data.
+### Initialization
 
-### format_chunk(chunk)
+```python
+chunker = StructuralSemanticChunker(max_token_length=512)
+```
 
-Formats the output chunk for better readability.
+### Methods
+
+#### `chunk_from_images(image_paths, extract_text=True)`
+
+Process document images and create chunks.
+
+**Returns:** `(clusters, nodes)` tuple
+
+**Example:**
+```python
+clusters, nodes = chunker.chunk_from_images(["page1.jpg", "page2.jpg"])
+```
+
+---
+
+## ChunkFormatter
+
+Format chunks for output.
+
+### Methods
+
+#### `export_chunks(clusters, nodes, output_dir, format='markdown')`
+
+Export chunks to files.
+
+**Returns:** Dict mapping cluster_id to filepath
+
+**Example:**
+```python
+formatter = ChunkFormatter()
+files = formatter.export_chunks(clusters, nodes, "chunks/")
+```
+
+---
+
+## LayoutDetector
+
+Detect document layout regions.
+
+### Initialization
+
+```python
+detector = LayoutDetector(
+    image_path="page.jpg",
+    model_path="models/layout_detect.pt"  # Optional
+)
+```
+
+### Methods
+
+#### `detect_layout(extract_text=True)`
+
+Detect layout regions.
+
+**Returns:** List of region dictionaries
+
+---
+
+## Node Structure
+
+```python
+{
+    "global_id": 1,
+    "page": 1,
+    "bbox": [x1, y1, x2, y2],
+    "label": "title",
+    "text": "Document Title",
+    "confidence": 0.95,
+    "reading_order": 1
+}
+```
+
+---
+
+For complete documentation, see [README.md](../README.md)

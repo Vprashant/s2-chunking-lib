@@ -1,141 +1,247 @@
+# S2 Chunking: Structural-Semantic Document Chunking
 
-## S2 Chunking: A Hybrid Framework for Document Segmentation Through Integrated Spatial and Semantic Analysis
-![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
-![arXiv Paper](https://img.shields.io/badge/arXiv-2501.05485-b31b1b)
-![YOLO](https://img.shields.io/badge/YOLO-v10-orange)
-![Transformers](https://img.shields.io/badge/Transformers-Hugging%20Face-yellow)
-![License](https://img.shields.io/badge/License-MIT-green)
+[![Python](https://img.shields.io/badge/Python-3.9%2B-blue)](https://www.python.org/)
+[![arXiv](https://img.shields.io/badge/arXiv-2501.05485-b31b1b)](https://arxiv.org/abs/2501.05485)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
-**S2 Chunking Lib** is a Python library designed for **structural-semantic chunking** of documents. It leverages advanced techniques to break down documents into meaningful chunks based on both **spatial layout** and **semantic content**. This library is particularly useful for processing multi-page documents, such as research papers, reports, and books, where understanding the structure and semantics is crucial.
+**S2 Chunking** is a Python library for intelligent document chunking that combines **structural layout analysis** with **semantic understanding**. It's designed for processing complex documents (research papers, reports, multi-column layouts) to create meaningful chunks for RAG and LLM applications.
 
-Inspired by the research in [arXiv:2501.05485](https://arxiv.org/pdf/2501.05485), this library implements a hybrid approach that combines **layout detection** (e.g., bounding boxes, regions) and **semantic analysis** (e.g., text embeddings) to create coherent and contextually meaningful chunks.
+## Key Features
 
----
-
-## Features
-
-- **Layout Detection**: Automatically detects layout elements (e.g., text blocks, figures, tables) using a pre-trained YOLO model.
-- **Semantic Analysis**: Uses transformer-based embeddings to understand the semantic relationships between text elements.
-- **Multi-Page Support**: Handles multi-page documents seamlessly, preserving the context across pages.
-- **Customizable Chunking**: Allows users to define maximum token lengths and thresholds for spatial and semantic relationships.
-- **Graph-Based Clustering**: Uses graph theory to cluster related elements into meaningful chunks.
-- **Easy Integration**: Provides a simple API for chunking documents and formatting the results.
-
----
+- **Layout-Aware**: Detects document structure using YOLO (titles, text, figures, tables, captions)
+- **Reading Order**: Automatically determines correct reading flow (columns, top-to-bottom)
+- **Semantic Clustering**: Groups related content using BERT embeddings
+- **Spatial Analysis**: Considers physical proximity of document elements
+- **Complete Chunks**: Generates markdown-formatted chunks with full text content
+- **Multi-Page Support**: Handles documents with multiple pages seamlessly
 
 ## Installation
 
-You can install the library using `pip`. Ensure you have Python 3.9 or higher installed.
-
 ```bash
-pip install s2chunking # not available as of now will update it soon
+# Clone repository
+git clone https://github.com/yourusername/s2-chunking-lib.git
+cd s2-chunking-lib
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Install doclayout-yolo for layout detection
+pip install doclayout-yolo
+
+# Optional: Install OCR support
+pip install easyocr pytesseract
 ```
 
----
+## Quick Start
 
-## Usage
+```python
+from s2chunking import StructuralSemanticChunker, ChunkFormatter
 
-### Basic Example
+# Initialize chunker
+chunker = StructuralSemanticChunker(max_token_length=512)
 
-Here’s how to use the `StructuralSemanticChunker` to process a multi-page document:
+# Process document images
+clusters, nodes = chunker.chunk_from_images(["page1.jpg", "page2.jpg"])
+
+# Generate complete markdown chunks
+formatter = ChunkFormatter()
+chunk_files = formatter.export_chunks(clusters, nodes, "output/chunks")
+
+print(f"Generated {len(chunk_files)} chunks")
+```
+
+## How It Works
+
+### 1. Layout Detection
+Uses a fine-tuned YOLO model (`layout_detect.pt`) to detect document regions:
+- Titles and headers
+- Plain text paragraphs
+- Figures and figure captions
+- Tables and table captions
+- Formulas
+
+### 2. Reading Order Detection
+Implements column-aware ordering:
+- Detects multi-column layouts
+- Orders regions left-to-right, top-to-bottom
+- Respects document flow
+
+### 3. Graph-Based Clustering
+Creates a weighted graph where:
+- **Nodes** = detected regions
+- **Edges** = spatial + semantic relationships
+- **Weights** = combined proximity and similarity scores
+
+Uses spectral clustering to group related regions.
+
+### 4. Chunk Generation
+Produces complete, self-contained markdown files:
+```markdown
+<!--
+Cluster: 0
+Nodes: 9
+Pages: [1, 2]
+Reading Order: 1-9
+Categories: {'title': 3, 'plain text': 4, 'table_caption': 2}
+-->
+
+# Chunk 0
+
+## Introduction
+
+[Full text content here...]
+
+## Formatting Guidelines
+
+[Full text content here...]
+```
+
+## Usage Examples
+
+### Basic Usage
 
 ```python
 from s2chunking import StructuralSemanticChunker
 
-# Initialize the chunker
-chunker = StructuralSemanticChunker(max_token_length=200)
-
-# List of image paths
-image_paths = ["path/to/page1.png", "path/to/page2.png"]
-
-# Perform chunking on the multi-page document
-clusters = chunker.chunk_from_images(image_paths)
-
-# Print the formatted clusters
-formatted_clusters = chunker.format_clusters(clusters)
-print(formatted_clusters)
+chunker = StructuralSemanticChunker(max_token_length=512)
+clusters, nodes = chunker.chunk_from_images(["doc.jpg"])
 ```
 
-### Output Example
-
-The output will be a formatted string showing the clusters of related elements:
-
-```
-Cluster 0:
-   - (page=1 local=1) Title of the document...
-   - (page=1 local=2) Introduction paragraph...
-Cluster 1:
-   - (page=2 local=1) Figure 1: Description...
-   - (page=2 local=2) Table 1: Summary of results...
-```
-
----
-
-## Advanced Usage
-
-### Customizing Layout Detection
-
-You can customize the layout detection by specifying a different YOLO model or thresholds:
+### With OCR Text Extraction
 
 ```python
-from s2chunking import LayoutDetector
-
-# Initialize the layout detector with a custom model
-layout_detector = LayoutDetector(
-    model_name="custom_model.pt",
-    repo_id="your-repo-id",
-    weights_folder="weight",
-    device="cuda"  # Use GPU if available
+# Extract actual text from images using EasyOCR
+clusters, nodes = chunker.chunk_from_images(
+    ["page1.jpg", "page2.jpg"],
+    extract_text=True  # Enable OCR
 )
-
-# Detect layout for a single page
-layout_info = layout_detector.detect_layout("path/to/page1.png")
-print(layout_info)
 ```
 
-### Customizing Chunking Parameters
-
-You can adjust the chunking parameters, such as the maximum token length and semantic thresholds:
+### Custom Configuration
 
 ```python
-# Initialize the chunker with custom parameters
 chunker = StructuralSemanticChunker(
-    max_token_length=300,  # Maximum tokens per chunk
-    spatial_threshold=0.5,  # Spatial relationship threshold
-    semantic_threshold=0.8  # Semantic relationship threshold
+    max_token_length=300,  # Smaller chunks
+)
+
+# Use custom model path
+from s2chunking import LayoutDetector
+detector = LayoutDetector(
+    image_path="page.jpg",
+    model_path="path/to/custom_model.pt"
 )
 ```
 
----
+### Generate Chunks for RAG
 
-## Documentation
+```python
+from s2chunking import ChunkFormatter
 
-For detailed API documentation, refer to the [docs/api.md](docs/api.md) file.
+formatter = ChunkFormatter()
 
----
+# Export as markdown
+chunk_files = formatter.export_chunks(
+    clusters, nodes,
+    output_dir="chunks",
+    format='markdown'
+)
 
-## Contributing
+# Now chunks are ready for embedding and indexing
+for cluster_id, filepath in chunk_files.items():
+    # Load and embed each chunk
+    with open(filepath, 'r') as f:
+        chunk_text = f.read()
+        # Your embedding logic here
+```
 
-We welcome contributions! If you’d like to contribute to the project, please follow these steps:
+## Command Line Usage
 
-1. Fork the repository.
-2. Create a new branch for your feature or bugfix.
-3. Submit a pull request with a detailed description of your changes.
+```bash
+# Basic usage
+python examples/example.py page1.jpg page2.jpg
 
----
+# Full example with visualization
+python examples/example.py
+```
 
-## License
+## Project Structure
 
-This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
+```
+s2-chunking-lib/
+├── src/s2chunking/
+│   ├── __init__.py
+│   ├── s2_chunker.py          # Main chunking logic
+│   ├── layout_deter.py        # YOLO layout detection
+│   ├── bbox_order.py          # Reading order detection
+│   └── chunk_formatter.py     # Chunk generation
+├── models/
+│   └── layout_detect.pt        # Pre-trained YOLO model
+├── examples/
+│   ├── example.py         # Simple example
+│   ├── example.py        # Complete example with visualization
+│   └── image1.jpg, image2.jpg # Sample images
+├── requirements.txt
+└── README.md
+```
 
----
+## Model
+
+The library uses `layout_detect.pt`, a YOLO-based model trained for document layout detection. The model detects:
+- Title (0)
+- Plain Text (1)
+- Abandon (2) - filtered out
+- Figure (3)
+- Figure Caption (4)
+- Table (5)
+- Table Caption (6)
+- Table Footnote (7)
+- Isolated Formula (8)
+- Formula Caption (9)
+
+To use your own model, place it in the `models/` folder or specify the path:
+```python
+detector = LayoutDetector(image_path="...", model_path="your_model.pt")
+```
+
+## Requirements
+
+```
+pydantic>=1.10.0
+networkx>=3.0
+numpy>=1.23.0
+scikit-learn>=1.1.0
+torch>=2.0.0
+transformers>=4.25.0
+opencv-python>=4.6.0
+doclayout-yolo
+```
+
+Optional for OCR:
+```
+easyocr
+pytesseract
+```
+
+## Output Structure
+
+```
+output/
+├── chunks/
+│   ├── chunk_000.md    # Markdown formatted chunks
+│   ├── chunk_001.md
+│   └── ...
+├── image1/
+│   ├── image1_annotated.jpg  # Visualizations
+│   └── cropped regions...
+└── chunking_results.txt      # Summary metadata
+```
 
 ## Citation
 
-If you use this library in your research, please consider citing the following paper:
+If you use this library in your research, please cite:
 
 ```bibtex
-@article{arxiv2501.05485,
+@article{s2chunking2025,
   title={S2 Chunking: A Hybrid Framework for Document Segmentation Through Integrated Spatial and Semantic Analysis},
   author={Prashant Verma},
   journal={arXiv preprint arXiv:2501.05485},
@@ -143,16 +249,34 @@ If you use this library in your research, please consider citing the following p
 }
 ```
 
----
+## Paper Reference
+
+This implementation is based on the paper:
+**"S2 Chunking: A Hybrid Framework for Document Segmentation Through Integrated Spatial and Semantic Analysis"**
+
+📄 [Read on arXiv](https://arxiv.org/abs/2501.05485)
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
-- This library is inspired by the research presented in [arXiv:2501.05485](https://arxiv.org/pdf/2501.05485).
-- Thanks to the open-source community for providing tools like [YOLO](https://github.com/ultralytics/ultralytics) and [Hugging Face Transformers](https://huggingface.co/).
-
----
+- Paper: [arXiv:2501.05485](https://arxiv.org/abs/2501.05485)
+- YOLO: [Ultralytics](https://github.com/ultralytics/ultralytics)
+- Transformers: [Hugging Face](https://huggingface.co/)
+- Layout Detection: [doclayout-yolo](https://github.com/opendatalab/doclayout-yolo)
 
 ## Contact
 
-For questions or feedback, please contact [Prashant Verma](mailto:prashant27050@gmail.com).
+For questions or feedback:
+- Email: prashant27050@gmail.com
+- Issues: [GitHub Issues](https://github.com/yourusername/s2-chunking-lib/issues)
 
+---
+
+Made with ❤️ for better document understanding

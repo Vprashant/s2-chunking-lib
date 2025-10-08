@@ -1,0 +1,80 @@
+
+Cluster 0: (9 regions)
+  - [Order: 1] Page 2, Region 13: title (confidence: 0.91)
+    BBox: [79,475,176,490]
+    Text: Introduction
+  - [Order: 2] Page 2, Region 12: title (confidence: 0.91)
+    BBox: [78,617,244,633]
+    Text: Formatting Your Paper
+  - [Order: 3] Page 2, Region 15: title (confidence: 0.90)
+    BBox: [196,300,253,315]
+    Text: Abstract
+  - [Order: 4] Page 2, Region 1: plain text (confidence: 0.98)
+    BBox: [78,331,368,460]
+    Text: Tle abatact I to be In fidhy-Jnfied ItalcEed text the top 0f the left-hand coltonn & i I here below ...
+  - [Order: 5] Page 2, Region 3: plain text (confidence: 0.98)
+    BBox: [78,502,370,602]
+    Text: Thest gud-hnes include complete descriptions of the fonts spacing and related uformaton for  pioduci...
+  - [Order: 6] Page 2, Region 5: plain text (confidence: 0.98)
+    BBox: [78,642,370,743]
+    Text: All printed material  Includng text, illusratCns chats mus be kept within ptint aiea of 6-7/8 tnche ...
+  - [Order: 7] Page 2, Region 2: plain text (confidence: 0.98)
+    BBox: [79,745,371,845]
+    Text: Tert must be fully justified A fcmat sheet with the magns &nd placem ent gudes available m both Wad ...
+  - [Order: 8] Page 1, Region 4: table_caption (confidence: 0.87)
+    BBox: [178,294,437,311]
+    Text: Built-in table style (List Table 2 Accent 2):
+  - [Order: 9] Page 1, Region 3: table_caption (confidence: 0.88)
+    BBox: [179,533,395,550]
+    Text: Custom table style GemBox Table):
+
+Cluster 1: (9 regions)
+  - [Order: 10] Page 1, Region 5: figure (confidence: 0.41)
+    BBox: [10,0,960,160]
+    Text: 9' Table Styles docx Word Mario at GemBox File Home Insert Layout References Mailings Review View De...
+  - [Order: 11] Page 1, Region 7: figure (confidence: 0.35)
+    BBox: [3,0,950,161]
+    Text: 8 9' Table Styles docx Word Mario at GemBox File Home Insert Layout References Mailings Review View ...
+  - [Order: 12] Page 2, Region 16: title (confidence: 0.89)
+    BBox: [131,133,637,154]
+    Text: Author Guidelines for IEEE 8.Sx41 2 Colunn Proceedings Formats
+  - [Order: 13] Page 2, Region 9: plain text (confidence: 0.97)
+    BBox: [282,183,484,268]
+    Text: Author Department of Computer Science The University of Akron Abon Ohio 44325 enal
+  - [Order: 14] Page 2, Region 11: title (confidence: 0.91)
+    BBox: [396,299,482,315]
+    Text: 3. Main Title
+  - [Order: 15] Page 2, Region 6: plain text (confidence: 0.98)
+    BBox: [396,326,688,427]
+    Text: Tht mtin htle (011 thc fust page) should bcgn 1-3/ Inchcs ( 49 cin) ftOm thc top edge 0f thc pags, c...
+  - [Order: 17] Page 2, Region 17: title (confidence: 0.89)
+    BBox: [397,441,630,457]
+    Text: Author Name(s) and Affiliation(s)
+  - [Order: 18] Page 2, Region 4: plain text (confidence: 0.98)
+    BBox: [396,468,689,582]
+    Text: Autho1 nanes   &nld   afilations cenfeied beneath the utle &nd printed mn Times 1>-point n0} boldfac...
+  - [Order: 19] Page 2, Region 14: title (confidence: 0.91)
+    BBox: [397,596,596,612]
+    Text: Second and Following Pages
+
+Cluster 2: (4 regions)
+  - [Order: 20] Page 2, Region 8: plain text (confidence: 0.98)
+    BBox: [397,623,688,710]
+    Text: The second and folloving pages should begn mnch 0 54 cm) ftom the top edge On all pages the bottom m...
+  - [Order: 22] Page 2, Region 10: title (confidence: 0.92)
+    BBox: [397,723,548,739]
+    Text: 6. Typestyle and Fonts
+  - [Order: 23] Page 2, Region 7: plain text (confidence: 0.98)
+    BBox: [397,750,690,837]
+    Text: Whtrever Times 1$ specfied Tunes Ronan New Ties Roman may be used Ff neithet avallable Yolz word  P1...
+  - [Order: 24] Page 1, Region 6: table_footnote (confidence: 0.37)
+    BBox: [391,162,878,175]
+    Text: table_footnote
+
+Cluster 3: (2 regions)
+  - [Order: 16] Page 1, Region 1: table (confidence: 0.98)
+    BBox: [179,313,786,502]
+    Text: Cell (1,1) Cell (1,2) Cell (1,3) Cell (1,4) Cell (1,5) Cell (2,1) Cell (2,2) Cell (2,37 Cell (2,4) C...
+  - [Order: 21] Page 1, Region 2: table (confidence: 0.97)
+    BBox: [180,552,783,814]
+    Text: Cell (1,1) Cell (1,2] Cell (1,3] Cell (1,4) Cell (1,5) Cell (2,1) Cell (2,2) Cell (2,3) Cell (2,4) C...
